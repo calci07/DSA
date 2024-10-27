@@ -114,7 +114,7 @@ class CustomerBST {
         this.root = null;
     }
 
-    // Insert a new customer into the BST
+ 
     public void insert(Customer customer) {
         root = insertRec(root, customer);
     }
@@ -132,7 +132,7 @@ class CustomerBST {
         return root;
     }
 
-    // Search for a customer by ID
+   
     public Customer search(int customerId) {
         return searchRec(root, customerId);
     }
@@ -167,25 +167,25 @@ public class CustomerLoyaltyTracker {
 
     public void dataReader(String filePath) {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            br.readLine(); // Skip header
+            br.readLine(); 
             String line;
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",\\s*");
                 int customerId = Integer.parseInt(data[0].trim());
                 LocalDate purchaseDate = LocalDate.parse(data[12].trim(), DATE_FORMAT);
 
-                // Only process if the customerId matches the targetCustomerId
+             
                 if (customerId == targetCustomerId) {
-                    // Check if the customer already exists in the BST
+                   
                     Customer customer = customers.search(customerId);
                     if (customer == null) {
-                        // If customer is not found, create a new Customer and insert it into the BST
+                       
                         customer = new Customer(customerId, Integer.parseInt(data[1].trim()),
                                 data[2].trim(), Boolean.parseBoolean(data[3].trim()));
-                        customers.insert(customer); // Insert into BST
+                        customers.insert(customer); 
                     }
 
-                    // Create the transaction
+                 
                     String productType = data[4].trim();
                     String sku = data[5].trim();
                     double rating = isNumeric(data[6].trim()) ? Double.parseDouble(data[6].trim()) : 0.0;
@@ -198,14 +198,14 @@ public class CustomerLoyaltyTracker {
                     String addOnsPurchased = data[14].trim();
                     double addOnTotal = isNumeric(data[15].trim()) ? Double.parseDouble(data[15].trim()) : 0.0;
 
-                    // Add the transaction to the existing customer
+             
                     Transaction transaction = new Transaction(
                             productType, sku, rating, orderStatus, paymentMethod, totalPrice,
                             unitPrice, quantity, purchaseDate, shippingType, addOnsPurchased, addOnTotal);
 
                     customer.addTransaction(transaction);
 
-                    // Debugging output to show transaction parsing
+              
                     System.out.println("---------------------------------");
                     System.out.println("          Parsed values");
                     System.out.println("---------------------------------");
@@ -267,9 +267,9 @@ public class CustomerLoyaltyTracker {
     }
 
     public static void main(String[] args) {
-        // Example of how to use the CustomerLoyaltyTracker
+   
         String filePath = "D:/programming files/BST/customers.csv";
-        int targetCustomerId = 19957; // Set the target customer ID
+        int targetCustomerId = 19957; 
 
         CustomerLoyaltyTracker tracker = new CustomerLoyaltyTracker(targetCustomerId);
         tracker.dataReader(filePath);
